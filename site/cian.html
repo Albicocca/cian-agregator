@@ -13,23 +13,28 @@
 			$(document).ready(function(){
 
 				$('#find').click(function(){
-					var reg = "1,2,2"
-					var str="deal_type=2&obl_id=1&city[0]=1&wp=1&";
-					str +="room"+$('#room').val()+"=1&";
+					var json_par = {
+						"deal_type":"2",
+						"obl_id":"1",
+						"city[0]":"1",
+						"wp":"1",
+						"room":$('#room').val(),
+						"totime":$('#totime').val()
+					};
+				
 					if (!$(".regions").hasClass("no-display")){
 						$($('#region').val()).each(function(key,value){
-							str +="in_polygon["+(key+1)+"]="+regions[value]+"&";
+							json_par["in_polygon["+(key+1)+"]"]=regions[value];
 						});
 						}
 					if (!$(".districs").hasClass("no-display")){
 						$($('#district').val()).each(function(){
 							$(districts[this]).each(function(key,value){
-							str +="in_polygon["+(key+1)+"]="+regions[value]+"&";
+							json_par["in_polygon["+(key+1)+"]"]=regions[value];
 						})
 						});
 						}
-					str +="totime="+$('#totime').val();
-					$(".result").html(str);
+					$(".result").html(JSON.stringify(json_par));
 					/*$.ajax({
 						type:"POST",
 						url: "http://www.cian.ru/cat.php",
