@@ -1,0 +1,255 @@
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Агрегатор</title>
+		<link  	rel="shortcut icon" href="favicon.ico">
+		<script src='js/jquery-2.1.1.min.js'></script>
+		<script src='js/regions.js'></script>
+		<script src='js/districts.js'></script>
+		<script src="jquery-ui-1.11.0.custom/jquery-ui.js"></script>
+		<link rel="stylesheet" href="jquery-ui-1.11.0.custom/jquery-ui.min.css">
+		<script>
+			$(document).ready(function(){
+
+				$('#find').click(function(){
+					var reg = "1,2,2"
+					var str="deal_type=2&obl_id=1&city[0]=1&wp=1&";
+					str +="room"+$('#room').val()+"=1&";
+					if (!$(".regions").hasClass("no-display")){
+						$($('#region').val()).each(function(key,value){
+							str +="in_polygon["+(key+1)+"]="+regions[value]+"&";
+						});
+						}
+					if (!$(".districs").hasClass("no-display")){
+						$($('#district').val()).each(function(){
+							$(districts[this]).each(function(key,value){
+							str +="in_polygon["+(key+1)+"]="+regions[value]+"&";
+						})
+						});
+						}
+					str +="totime="+$('#totime').val();
+					$(".result").html(str);
+					/*$.ajax({
+						type:"POST",
+						url: "http://www.cian.ru/cat.php",
+						data:str,
+						success: function(resp){
+							//$(".result").html(resp);
+							}
+						});*/
+				})
+				$("#choise").change(function(){
+					var choise = $(this).val();
+					$(".variant").addClass("no-display");
+					$("."+choise).removeClass('no-display');
+				})
+			});
+		</script>
+		<style>
+		.no-display{
+			display:none;
+			}
+		.property {
+			display: inline-block;
+			width: 150px;
+		}
+		select{
+			width: 370px;
+			}
+		</style/
+	</head>
+	<body>
+		<form id='cian'>
+			<div class="times">
+				<span class="property">Дата:</span>
+				<select id="totime">
+					<option value="-1">за любую дату</option>
+					<option value="-2">за сегодня</option>
+					<option selected="selected" value="300">за 5 мин.</option>
+					<option value="600">за 10 мин.</option>
+					<option value="900">за 15 мин.</option>
+					<option value="1200">за 20 мин.</option>
+					<option value="1800">за 30 мин.</option>
+					<option value="3600">за час</option>
+					<option value="7200">за 2 часа</option>
+					<option value="10800">за 3 часа</option>
+					<option value="14400">за 4 часа</option>
+					<option value="18000">за 5 часов</option>
+					<option value="21600">за 6 часов</option>
+					<option value="43200">за 12 часов</option>
+					<option value="64800">за 18 часов</option>
+					<option value="86400">за сутки</option>
+					<option value="129600">за 36 часов</option>
+					<option value="172800">за 2 дня</option>
+					<option value="259200">за 3 дня</option>
+					<option value="432000">за 5 дней</option>
+					<option value="864000">за 10 дней</option>
+					<option value="2592000">за месяц</option>
+				</select>
+			</div>
+			<div class="rooms">
+				<span class="property">Комнат:</span>
+				<select id="room">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+			</div>
+			<div class="choise">
+				<span class="property">Выбор по :</span>
+				<select id="choise">
+					<option value="regions">районам</option>
+					<option value="districts">округам</option>
+				</select>
+			</div>
+			<div class='regions variant'>	
+				<span class="property"></span>
+				<select id='region' multiple="multiple" size="7">
+					<option value="akademicheskij">Академический</option>
+					<option value="alekseevskij">Алексеевский</option>
+					<option value="altufevskij">Алтуфьевский</option>
+					<option value="arbat">Арбат</option>
+					<option value="aeroport">Аэропорт</option>
+					<option value="babushkinskij">Бабушкинский</option>
+					<option value="basmannyj">Басманный</option>
+					<option value="begovoj">Беговой</option>
+					<option value="beskudnikovskij">Бескудниковский</option>
+					<option value="bibirevo">Бибирево</option>
+					<option value="biryulevo_vostochnoe">Бирюлёво Восточное</option>
+					<option value="biryulevo_zapadnoe">Бирюлёво Западное</option>
+					<option value="bogorodskoe">Богородское</option>
+					<option value="brateevo">Братеево</option>
+					<option value="butovo_severnoe">Бутово Северное</option>
+					<option value="butovo_yuzhnoe">Бутово Южное</option>
+					<option value="butyrskij">Бутырский</option>
+					<option value="veshnyaki">Вешняки</option>
+					<option value="vnukovo">Внуково</option>
+					<option value="vojkovskij">Войковский</option>
+					<option value="vostochnyj">Восточный</option>
+					<option value="vyhino-zhulebino">Выхино-Жулебино</option>
+					<option value="gagarinskij">Гагаринский</option>
+					<option value="golovinskij">Головинский</option>
+					<option value="golyanovo">Гольяново</option>
+					<option value="danilovskij">Даниловский</option>
+					<option value="degunino_vostochnoe">Дегунино Восточное</option>
+					<option value="degunino_zapadnoe">Дегунино Западное</option>
+					<option value="dmitrovskij">Дмитровский</option>
+					<option value="donskoj">Донской</option>
+					<option value="dorogomilovo">Дорогомилово</option>
+					<option value="zamoskvoreche">Замоскворечье</option>
+					<option value="zyuzino">Зюзино</option>
+					<option value="zyablikovo">Зябликово</option>
+					<option value="ivanovskoe">Ивановское</option>
+					<option value="izmajlovo_vostochnoe">Измайлово Восточное</option>
+					<option value="izmajlovo">Измайлово</option>
+					<option value="izmajlovo_severnoe">Измайлово Северное</option>
+					<option value="kapotnya">Капотня</option>
+					<option value="konkovo">Коньково</option>
+					<option value="koptevo">Коптево</option>
+					<option value="kosino-uhtomskij">Косино-Ухтомский</option>
+					<option value="kotlovka">Котловка</option>
+					<option value="krasnoselskij">Красносельский</option>
+					<option value="krylatskoe">Крылатское</option>
+					<option value="kryukovo">Крюково</option>
+					<option value="kuzminki">Кузьминки</option>
+					<option value="kuncevo">Кунцево</option>
+					<option value="kurkino">Куркино</option>
+					<option value="levoberezhnyj">Левобережный</option>
+					<option value="lefortovo">Лефортово</option>
+					<option value="lianozovo">Лианозово</option>
+					<option value="lomonosovskij">Ломоносовский</option>
+					<option value="losinoostrovskij">Лосиноостровский</option>
+					<option value="lyublino">Люблино</option>
+					<option value="marfino">Марфино</option>
+					<option value="marina_roshcha">Марьина роща</option>
+					<option value="marino">Марьино</option>
+					<option value="matushkino">Матушкино</option>
+					<option value="medvedkovo_severnoe">Медведково Северное</option>
+					<option value="medvedkovo_yuzhnoe">Медведково Южное</option>
+					<option value="metrogorodok">Метрогородок</option>
+					<option value="meshchanskij">Мещанский</option>
+					<option value="mitino">Митино</option>
+					<option value="mozhajskij">Можайский</option>
+					<option value="molzhaninovskij">Молжаниновский</option>
+					<option value="moskvoreche-saburovo">Москворечье-Сабурово</option>
+					<option value="nagatino-sadovniki">Нагатино-Садовники</option>
+					<option value="nagatinskij_zaton">Нагатинский затон</option>
+					<option value="nagornyj">Нагорный</option>
+					<option value="nekrasovka">Некрасовка</option>
+					<option value="nizhegorodskij">Нижегородский</option>
+					<option value="novo-peredelkino">Ново-Переделкино</option>
+					<option value="novogireevo">Новогиреево</option>
+					<option value="novokosino">Новокосино</option>
+					<option value="obruchevskij">Обручевский</option>
+					<option value="orehovo-borisovo_severnoe">Орехово-Борисово Северное</option>
+					<option value="orehovo-borisovo_yuzhnoe">Орехово-Борисово Южное</option>
+					<option value="ostankinskij">Останкинский</option>
+					<option value="otradnoe">Отрадное</option>
+					<option value="ochakovo-matveevskoe">Очаково-Матвеевское</option>
+					<option value="perovo">Перово</option>
+					<option value="pechatniki">Печатники</option>
+					<option value="pokrovskoe-streshnevo">Покровское-Стрешнево</option>
+					<option value="preobrazhenskoe">Преображенское</option>
+					<option value="presnenskij">Пресненский</option>
+					<option value="prospekt_vernadskogo">Проспект Вернадского</option>
+					<option value="ramenki">Раменки</option>
+					<option value="rostokino">Ростокино</option>
+					<option value="ryazanskij">Рязанский</option>
+					<option value="savelki">Савёлки</option>
+					<option value="savelovskij">Савёловский</option>
+					<option value="sviblovo">Свиблово</option>
+					<option value="severnyj">Северный</option>
+					<option value="silino">Силино</option>
+					<option value="sokol">Сокол</option>
+					<option value="sokolinaya_gora">Соколиная гора</option>
+					<option value="sokolniki">Сокольники</option>
+					<option value="solncevo">Солнцево</option>
+					<option value="staroe_kryukovo">Старое Крюково</option>
+					<option value="strogino">Строгино</option>
+					<option value="taganskij">Таганский</option>
+					<option value="tverskoj">Тверской</option>
+					<option value="tekstilshchiki">Текстильщики</option>
+					<option value="teplyj_stan">Тёплый Стан</option>
+					<option value="timiryazevskij">Тимирязевский</option>
+					<option value="troparevo-nikulino">Тропарёво-Никулино</option>
+					<option value="tushino_severnoe">Тушино Северное</option>
+					<option value="tushino_yuzhnoe">Тушино Южное</option>
+					<option value="filevskij_park">Филёвский парк</option>
+					<option value="fili-davydkovo">Фили-Давыдково</option>
+					<option value="hamovniki">Хамовники</option>
+					<option value="hovrino">Ховрино</option>
+					<option value="horoshevo-mnevniki">Хорошёво-Мневники</option>
+					<option value="horoshevskij">Хорошёвский</option>
+					<option value="caricyno">Царицыно</option>
+					<option value="cheremushki">Черёмушки</option>
+					<option value="chertanovo_severnoe">Чертаново Северное</option>
+					<option value="chertanovo_centralnoe">Чертаново Центральное</option>
+					<option value="chertanovo_yuzhnoe">Чертаново Южное</option>
+					<option value="shchukino">Щукино</option>
+					<option value="yuzhnoportovyj">Южнопортовый</option>
+					<option value="yakimanka">Якиманка</option>
+					<option value="yaroslavskij">Ярославский</option>
+					<option value="yasenevo">Ясенево</option>
+				</select>
+			</div>
+			<div class='no-display districts variant'>
+				<span class="property"></span>
+				<select id="district" multiple="multiple" size="7">
+					<option value="cao">ЦАО</option>
+					<option value="sao">САО</option>
+					<option value="svao">СВАО</option>
+					<option value="vao">ВАО</option>
+					<option value="uvao">ЮВАО</option>
+					<option value="uao">ЮАО</option>
+					<option value="uzao">ЮЗАО</option>
+					<option value="zao">ЗАО</option>
+					<option value="szao">СЗАО</option>
+					<option value="zelao">ЗелАО</option>
+				</select>
+			</div>
+			<input id='find' type='button' value='Do'/>
+		</form>
+		<div class="result"></div>
+	</body>
+</html>
